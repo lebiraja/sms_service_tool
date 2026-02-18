@@ -1,5 +1,6 @@
 package com.smstool.gateway.data.db;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -10,6 +11,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "sms_jobs")
 public class SmsJobEntity {
     @PrimaryKey
+    @NonNull
     public String jobId;
 
     public String toNumber;

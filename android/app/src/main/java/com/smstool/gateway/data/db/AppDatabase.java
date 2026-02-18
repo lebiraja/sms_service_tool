@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase;
  * Room database for SMSTool.
  * Stores SMS jobs and activity log.
  */
-@Database(entities = {SmsJobEntity.class, EventLogEntity.class}, version = 1)
+@Database(entities = {SmsJobEntity.class, EventLogEntity.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static volatile AppDatabase instance;
 

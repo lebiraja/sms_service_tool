@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent">#4CAF50</color>
+    <color name="bg_card">#FFFFFF</color>
+    <color name="bg_light">#FAFAFA</color>
+    <color name="error">#F44336</color>
+    <color name="log_error">#F44336</color>
+    <color name="log_info">#2196F3</color>
+    <color name="log_warn">#FFC107</color>
+    <color name="primary">#2196F3</color>
+    <color name="primary_dark">#1976D2</color>
+    <color name="status_connected">#4CAF50</color>
+    <color name="status_connecting">#FFC107</color>
+    <color name="status_disconnected">#9E9E9E</color>
+    <color name="status_error">#F44336</color>
+    <color name="success">#4CAF50</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <dimen name="button_height">48dp</dimen>
+    <dimen name="button_min_width">64dp</dimen>
+    <dimen name="corner_radius_default">4dp</dimen>
+    <dimen name="corner_radius_large">8dp</dimen>
+    <dimen name="icon_size_large">48dp</dimen>
+    <dimen name="icon_size_medium">32dp</dimen>
+    <dimen name="icon_size_small">24dp</dimen>
+    <dimen name="margin_default">16dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="padding_default">16dp</dimen>
+    <dimen name="padding_large">24dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="text_size_body">14sp</dimen>
+    <dimen name="text_size_heading">18sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_title">16sp</dimen>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_connect">Connect</string>
+    <string name="action_copy_device_id">Copy Device ID</string>
+    <string name="action_disconnect">Disconnect</string>
+    <string name="action_retry">Retry</string>
+    <string name="app_name">SMS Gateway</string>
+    <string name="error_invalid_url">Invalid URL format</string>
+    <string name="error_network_offline">Network is offline</string>
+    <string name="error_permission_denied">Permission denied</string>
+    <string name="hint_server_url">e.g., 192.168.1.100:7777 or ws://example.com</string>
+    <string name="label_activity_log">Activity Log</string>
+    <string name="label_device_id">Device ID</string>
+    <string name="label_server_url">Backend Server</string>
+    <string name="status_connected">Connected</string>
+    <string name="status_connecting">Connecting...</string>
+    <string name="status_error">Connection failed</string>
+    <string name="status_not_connected">Not connected</string>
+    <style name="Theme.SMSGateway" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorSecondaryVariant">@color/accent</item>
+        <item name="colorError">@color/error</item>
+        <item name="colorSurface">@color/bg_card</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorOnSecondary">@android:color/black</item>
+        <item name="colorOnError">@android:color/white</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+    </style>
+</resources>

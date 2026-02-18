@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-mergeDebugResources-34:/layout/item_event_log.xml",
+        "source": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-main-37:/layout/item_event_log.xml"
+    },
+    {
+        "merged": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-mergeDebugResources-34:/layout/activity_main.xml",
+        "source": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-main-37:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.smstool.gateway.app-mergeDebugResources-34:/layout/activity_main.xml",
+        "source": "com.smstool.gateway.app-main-37:/layout/activity_main.xml"
+    }
+]

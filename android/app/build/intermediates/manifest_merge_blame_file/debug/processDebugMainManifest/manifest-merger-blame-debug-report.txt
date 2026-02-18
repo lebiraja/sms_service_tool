@@ -1,0 +1,210 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.smstool.gateway"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="29"
+9        android:targetSdkVersion="34" />
+10
+11    <!-- Permissions -->
+12    <uses-permission android:name="android.permission.SEND_SMS" />
+12-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:6:5-67
+12-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:6:22-64
+13    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+13-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:7:5-70
+13-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:7:22-67
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:8:5-67
+14-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:8:22-64
+15    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+15-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:9:5-79
+15-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:9:22-76
+16    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+16-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:10:5-77
+16-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:10:22-74
+17    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+17-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:11:5-94
+17-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:11:22-91
+18    <uses-permission android:name="android.permission.WAKE_LOCK" />
+18-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:12:5-68
+18-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:12:22-65
+19    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+19-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:13:5-81
+19-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:13:22-78
+20    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+20-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:14:5-77
+20-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:14:22-74
+21
+22    <!-- Device feature requirements -->
+23    <uses-feature
+23-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:17:5-19:35
+24        android:name="android.hardware.telephony"
+24-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:18:9-50
+25        android:required="true" />
+25-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:19:9-32
+26
+27    <permission
+27-->[androidx.core:core:1.13.0] /home/lebi/.gradle/caches/8.13/transforms/0a442df3b823586b7b45366d3f7198cf/transformed/core-1.13.0/AndroidManifest.xml:22:5-24:47
+28        android:name="com.smstool.gateway.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+28-->[androidx.core:core:1.13.0] /home/lebi/.gradle/caches/8.13/transforms/0a442df3b823586b7b45366d3f7198cf/transformed/core-1.13.0/AndroidManifest.xml:23:9-81
+29        android:protectionLevel="signature" />
+29-->[androidx.core:core:1.13.0] /home/lebi/.gradle/caches/8.13/transforms/0a442df3b823586b7b45366d3f7198cf/transformed/core-1.13.0/AndroidManifest.xml:24:9-44
+30
+31    <uses-permission android:name="com.smstool.gateway.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+31-->[androidx.core:core:1.13.0] /home/lebi/.gradle/caches/8.13/transforms/0a442df3b823586b7b45366d3f7198cf/transformed/core-1.13.0/AndroidManifest.xml:26:5-97
+31-->[androidx.core:core:1.13.0] /home/lebi/.gradle/caches/8.13/transforms/0a442df3b823586b7b45366d3f7198cf/transformed/core-1.13.0/AndroidManifest.xml:26:22-94
+32
+33    <application
+33-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:21:5-62:19
+34        android:allowBackup="true"
+34-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:22:9-35
+35        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+35-->[androidx.core:core:1.13.0] /home/lebi/.gradle/caches/8.13/transforms/0a442df3b823586b7b45366d3f7198cf/transformed/core-1.13.0/AndroidManifest.xml:28:18-86
+36        android:dataExtractionRules="@xml/data_extraction_rules"
+36-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:23:9-65
+37        android:debuggable="true"
+38        android:extractNativeLibs="false"
+39        android:fullBackupContent="@xml/backup_rules"
+39-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:24:9-54
+40        android:icon="@drawable/ic_launcher"
+40-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:25:9-45
+41        android:label="@string/app_name"
+41-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:26:9-41
+42        android:supportsRtl="true"
+42-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:27:9-35
+43        android:theme="@style/Theme.SMSGateway" >
+43-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:28:9-48
+44
+45        <!-- Main Activity -->
+46        <activity
+46-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:32:9-39:20
+47            android:name="com.smstool.gateway.MainActivity"
+47-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:33:13-60
+48            android:exported="true" >
+48-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:34:13-36
+49            <intent-filter>
+49-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:35:13-38:29
+50                <action android:name="android.intent.action.MAIN" />
+50-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:36:17-69
+50-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:36:25-66
+51
+52                <category android:name="android.intent.category.LAUNCHER" />
+52-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:37:17-77
+52-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:37:27-74
+53            </intent-filter>
+54        </activity>
+55
+56        <!-- Foreground Service -->
+57        <service
+57-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:42:9-45:63
+58            android:name="com.smstool.gateway.service.GatewayForegroundService"
+58-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:43:13-80
+59            android:exported="false"
+59-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:44:13-37
+60            android:foregroundServiceType="connectedDevice" />
+60-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:45:13-60
+61
+62        <!-- Broadcast Receivers -->
+63        <receiver
+63-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:48:9-55:20
+64            android:name="com.smstool.gateway.receiver.BootReceiver"
+64-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:49:13-69
+65            android:exported="true" >
+65-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:50:13-36
+66            <intent-filter>
+66-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:51:13-54:29
+67                <action android:name="android.intent.action.BOOT_COMPLETED" />
+67-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:52:17-79
+67-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:52:25-76
+68                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+68-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:53:17-84
+68-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:53:25-81
+69            </intent-filter>
+70        </receiver>
+71
+72        <!-- Notification Channel Configuration -->
+73        <service
+73-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:58:9-60:40
+74            android:name="com.smstool.gateway.util.NotificationHelper"
+74-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:59:13-71
+75            android:exported="false" />
+75-->/home/lebi/projects/smstool/android/app/src/main/AndroidManifest.xml:60:13-37
+76        <service
+76-->[androidx.room:room-runtime:2.6.1] /home/lebi/.gradle/caches/8.13/transforms/fb16c9c2735d47120834c0f771e9c004/transformed/room-runtime-2.6.1/AndroidManifest.xml:24:9-28:63
+77            android:name="androidx.room.MultiInstanceInvalidationService"
+77-->[androidx.room:room-runtime:2.6.1] /home/lebi/.gradle/caches/8.13/transforms/fb16c9c2735d47120834c0f771e9c004/transformed/room-runtime-2.6.1/AndroidManifest.xml:25:13-74
+78            android:directBootAware="true"
+78-->[androidx.room:room-runtime:2.6.1] /home/lebi/.gradle/caches/8.13/transforms/fb16c9c2735d47120834c0f771e9c004/transformed/room-runtime-2.6.1/AndroidManifest.xml:26:13-43
+79            android:exported="false" />
+79-->[androidx.room:room-runtime:2.6.1] /home/lebi/.gradle/caches/8.13/transforms/fb16c9c2735d47120834c0f771e9c004/transformed/room-runtime-2.6.1/AndroidManifest.xml:27:13-37
+80
+81        <provider
+81-->[androidx.emoji2:emoji2:1.3.0] /home/lebi/.gradle/caches/8.13/transforms/0cbe343614403bb23b063726add83b65/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+82            android:name="androidx.startup.InitializationProvider"
+82-->[androidx.emoji2:emoji2:1.3.0] /home/lebi/.gradle/caches/8.13/transforms/0cbe343614403bb23b063726add83b65/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:25:13-67
+83            android:authorities="com.smstool.gateway.androidx-startup"
+83-->[androidx.emoji2:emoji2:1.3.0] /home/lebi/.gradle/caches/8.13/transforms/0cbe343614403bb23b063726add83b65/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:26:13-68
+84            android:exported="false" >
+84-->[androidx.emoji2:emoji2:1.3.0] /home/lebi/.gradle/caches/8.13/transforms/0cbe343614403bb23b063726add83b65/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:27:13-37
+85            <meta-data
+85-->[androidx.emoji2:emoji2:1.3.0] /home/lebi/.gradle/caches/8.13/transforms/0cbe343614403bb23b063726add83b65/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+86                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+86-->[androidx.emoji2:emoji2:1.3.0] /home/lebi/.gradle/caches/8.13/transforms/0cbe343614403bb23b063726add83b65/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:30:17-75
+87                android:value="androidx.startup" />
+87-->[androidx.emoji2:emoji2:1.3.0] /home/lebi/.gradle/caches/8.13/transforms/0cbe343614403bb23b063726add83b65/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:31:17-49
+88            <meta-data
+88-->[androidx.lifecycle:lifecycle-process:2.8.7] /home/lebi/.gradle/caches/8.13/transforms/c8e053dc610571d590fe2318893af835/transformed/jetified-lifecycle-process-2.8.7/AndroidManifest.xml:29:13-31:52
+89                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+89-->[androidx.lifecycle:lifecycle-process:2.8.7] /home/lebi/.gradle/caches/8.13/transforms/c8e053dc610571d590fe2318893af835/transformed/jetified-lifecycle-process-2.8.7/AndroidManifest.xml:30:17-78
+90                android:value="androidx.startup" />
+90-->[androidx.lifecycle:lifecycle-process:2.8.7] /home/lebi/.gradle/caches/8.13/transforms/c8e053dc610571d590fe2318893af835/transformed/jetified-lifecycle-process-2.8.7/AndroidManifest.xml:31:17-49
+91            <meta-data
+91-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:29:13-31:52
+92                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+92-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:30:17-85
+93                android:value="androidx.startup" />
+93-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:31:17-49
+94        </provider>
+95
+96        <receiver
+96-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:34:9-52:20
+97            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+97-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:35:13-76
+98            android:directBootAware="false"
+98-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:36:13-44
+99            android:enabled="true"
+99-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:37:13-35
+100            android:exported="true"
+100-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:38:13-36
+101            android:permission="android.permission.DUMP" >
+101-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:39:13-57
+102            <intent-filter>
+102-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:40:13-42:29
+103                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+103-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:41:17-91
+103-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:41:25-88
+104            </intent-filter>
+105            <intent-filter>
+105-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:43:13-45:29
+106                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+106-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:44:17-85
+106-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:44:25-82
+107            </intent-filter>
+108            <intent-filter>
+108-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:46:13-48:29
+109                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+109-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:47:17-88
+109-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:47:25-85
+110            </intent-filter>
+111            <intent-filter>
+111-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:49:13-51:29
+112                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+112-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:50:17-95
+112-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/lebi/.gradle/caches/8.13/transforms/cf640ddd6686081319112a8f57a52f07/transformed/jetified-profileinstaller-1.4.0/AndroidManifest.xml:50:25-92
+113            </intent-filter>
+114        </receiver>
+115    </application>
+116
+117</manifest>

@@ -1,0 +1,54 @@
+[
+    {
+        "merged": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-debug-35:/drawable_bg_status_card.xml.flat",
+        "source": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-main-37:/drawable/bg_status_card.xml"
+    },
+    {
+        "merged": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-debug-35:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-main-37:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-debug-35:/xml_backup_rules.xml.flat",
+        "source": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-main-37:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-debug-35:/drawable_ic_dot.xml.flat",
+        "source": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-main-37:/drawable/ic_dot.xml"
+    },
+    {
+        "merged": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-debug-35:/drawable_ic_launcher.xml.flat",
+        "source": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-main-37:/drawable/ic_launcher.xml"
+    },
+    {
+        "merged": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-debug-35:/layout_activity_main.xml.flat",
+        "source": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-main-37:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-debug-35:/drawable_bg_log_card.xml.flat",
+        "source": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-main-37:/drawable/bg_log_card.xml"
+    },
+    {
+        "merged": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-debug-35:/drawable_ic_copy.xml.flat",
+        "source": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-main-37:/drawable/ic_copy.xml"
+    },
+    {
+        "merged": "com.smstool.gateway.app-debug-35:/layout_activity_main.xml.flat",
+        "source": "com.smstool.gateway.app-main-37:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-debug-35:/drawable_status_chip_colors.xml.flat",
+        "source": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-main-37:/drawable/status_chip_colors.xml"
+    },
+    {
+        "merged": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-debug-35:/layout_item_event_log.xml.flat",
+        "source": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-main-37:/layout/item_event_log.xml"
+    },
+    {
+        "merged": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-debug-35:/xml_data_extraction_rules.xml.flat",
+        "source": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-main-37:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-debug-35:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "/home/lebi/.gradle/daemon/8.13/com.smstool.gateway.app-main-37:/drawable/ic_launcher_foreground.xml"
+    }
+]

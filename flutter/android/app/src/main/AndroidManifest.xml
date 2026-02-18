@@ -54,6 +54,23 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <!-- Foreground Service for SMS Gateway -->
+        <service
+            android:name="com.pravera.flutter_foreground_task.service.ForegroundService"
+            android:description="@string/app_name"
+            android:foregroundServiceType="dataSync"
+            android:exported="false" />
+
+        <!-- Boot Receiver for auto-start -->
+        <receiver
+            android:name="com.pravera.flutter_foreground_task.receiver.ForegroundTaskBootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

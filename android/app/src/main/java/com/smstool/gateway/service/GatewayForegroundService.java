@@ -67,13 +67,8 @@ public class GatewayForegroundService extends Service {
         registerBroadcastReceivers();
 
         // Start as foreground service
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            startForeground(NOTIFICATION_ID, NotificationHelper.createForegroundNotification(
-                    this, "Connecting..."), Service.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE);
-        } else {
-            startForeground(NOTIFICATION_ID, NotificationHelper.createForegroundNotification(
-                    this, "Connecting..."));
-        }
+        startForeground(NOTIFICATION_ID, NotificationHelper.createForegroundNotification(
+                this, "Connecting..."));
 
         prefsManager.setServiceRunning(true);
     }
@@ -381,7 +376,7 @@ public class GatewayForegroundService extends Service {
 
     // Binder for local client binding
     public class ServiceBinder extends Binder {
-        GatewayForegroundService getService() {
+        public GatewayForegroundService getService() {
             return GatewayForegroundService.this;
         }
     }

@@ -41,10 +41,19 @@ class WebSocketManager {
 
     try {
       final normalizedUrl = _normalizeUrl(url);
+      // Debug: log the normalized URL
+      print('WebSocket connecting to: $normalizedUrl');
+
       _channel = WebSocketChannel.connect(Uri.parse(normalizedUrl));
 
-      // Wait for connection to establish
-      await _channel!.ready;
+      // Wait for connection to establish with timeout
+      await _channel!.ready.timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw Exception('WebSocket connection timeout (10s) - is the server reachable?');
+        },
+      );
+
       _setState(ConnectionState.connected);
       _retryAttempt = 0;
 
@@ -129,7 +138,14 @@ class WebSocketManager {
   String _normalizeUrl(String url) {
     url = url.trim();
 
-    // Add ws:// prefix if missing
+    // Remove http:// or https:// if present (convert to ws://)
+    if (url.startsWith('https://')) {
+      url = url.replaceFirst('https://', 'wss://');
+    } else if (url.startsWith('http://')) {
+      url = url.replaceFirst('http://', 'ws://');
+    }
+
+    // Add ws:// prefix if no protocol specified
     if (!url.startsWith('ws://') && !url.startsWith('wss://')) {
       url = 'ws://$url';
     }

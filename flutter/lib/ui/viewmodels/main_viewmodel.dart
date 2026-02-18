@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import '../../data/models/event_log_entry.dart';
 import '../../data/prefs/prefs_manager.dart';
 import '../../data/repository/sms_job_repository.dart';
 import '../../network/websocket_manager.dart';
+import '../../service/gateway_task_handler.dart';
 
 enum ConnectionStateEnum {
   idle,
@@ -86,13 +88,63 @@ class MainViewModel extends ChangeNotifier {
     await _prefs.setGatewayUrl(_serverUrl);
     await _prefs.setServiceRunning(true);
 
-    // In the actual implementation, this will be handled by flutter_foreground_task
-    await _wsManager.connect(_serverUrl);
+    try {
+      // Configure and start the foreground service
+      await _startForegroundService();
+    } catch (e) {
+      _errorMessage = 'Failed to start service: $e';
+      notifyListeners();
+    }
   }
 
   Future<void> disconnect() async {
-    _wsManager.disconnect();
+    await _stopForegroundService();
     await _prefs.setServiceRunning(false);
+  }
+
+  Future<void> _startForegroundService() async {
+    try {
+      // Configure foreground task
+      FlutterForegroundTask.init(
+        androidNotificationOptions: AndroidNotificationOptions(
+          id: 1,
+          channelId: 'sms_gateway_channel',
+          channelName: 'SMS Gateway',
+          channelDescription: 'SMS Gateway background service',
+        ),
+        iosNotificationOptions: const IOSNotificationOptions(
+          showNotification: true,
+          playSound: false,
+        ),
+        foregroundTaskOptions: ForegroundTaskOptions(
+          eventAction: ForegroundTaskEventAction.repeat(5000),
+          autoRunOnBoot: true,
+          allowWakeLock: true,
+          allowWifiLock: true,
+        ),
+      );
+
+      // Start the foreground task
+      await FlutterForegroundTask.startService(
+        serviceId: 100,
+        notificationTitle: 'SMS Gateway',
+        notificationText: 'Connected to gateway server',
+        callback: startGatewayTask,
+      );
+
+      notifyListeners();
+    } catch (e) {
+      print('Error starting foreground service: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> _stopForegroundService() async {
+    try {
+      await FlutterForegroundTask.stopService();
+    } catch (e) {
+      print('Error stopping foreground service: $e');
+    }
   }
 
   void copyDeviceId() {
