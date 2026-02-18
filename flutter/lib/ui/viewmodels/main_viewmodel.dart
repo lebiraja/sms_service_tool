@@ -104,6 +104,8 @@ class MainViewModel extends ChangeNotifier {
 
   Future<void> _startForegroundService() async {
     try {
+      print('Initializing foreground task...');
+
       // Configure foreground task
       FlutterForegroundTask.init(
         androidNotificationOptions: AndroidNotificationOptions(
@@ -124,6 +126,8 @@ class MainViewModel extends ChangeNotifier {
         ),
       );
 
+      print('Starting foreground service...');
+
       // Start the foreground task
       await FlutterForegroundTask.startService(
         serviceId: 100,
@@ -132,10 +136,15 @@ class MainViewModel extends ChangeNotifier {
         callback: startGatewayTask,
       );
 
+      print('Foreground service started successfully');
+      await _repository.logInfo('Background service started');
       notifyListeners();
     } catch (e) {
       print('Error starting foreground service: $e');
-      rethrow;
+      _errorMessage = 'Failed to start background service: $e';
+      _connectionState = ConnectionStateEnum.error;
+      await _repository.logError('Failed to start service: $e');
+      notifyListeners();
     }
   }
 
