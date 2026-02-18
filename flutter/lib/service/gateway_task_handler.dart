@@ -60,11 +60,15 @@ class GatewayTaskHandler extends TaskHandler {
         await _sendDeviceInfo();
 
         // Start polling timer (poll every 5 seconds)
+        developer.log('[GatewayTask] Starting polling timer...');
         _pollTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
+          developer.log('[GatewayTask] Timer callback - calling _pollForJobs');
           _pollForJobs();
         });
+        developer.log('[GatewayTask] Polling timer started');
 
         // Do initial poll immediately
+        developer.log('[GatewayTask] Doing initial poll...');
         await _pollForJobs();
 
         developer.log('[GatewayTask] Gateway task handler initialized successfully');
@@ -118,11 +122,17 @@ class GatewayTaskHandler extends TaskHandler {
 
   /// Poll the backend for pending jobs
   Future<void> _pollForJobs() async {
-    if (!_initialized) return;
+    if (!_initialized) {
+      developer.log('[GatewayTask] Poll skipped - not initialized');
+      return;
+    }
 
     try {
+      developer.log('[GatewayTask] Starting poll cycle...');
+
       // First, check if backend is healthy
       if (!_isConnected) {
+        developer.log('[GatewayTask] Not connected, checking health...');
         final isHealthy = await _httpClient.healthCheck();
         if (!isHealthy) {
           developer.log('[GatewayTask] Backend health check failed');
@@ -142,7 +152,9 @@ class GatewayTaskHandler extends TaskHandler {
       }
 
       // Poll for pending jobs
+      developer.log('[GatewayTask] Polling for jobs...');
       final jobs = await _httpClient.getPendingJobs();
+      developer.log('[GatewayTask] Poll returned ${jobs.length} jobs');
 
       if (jobs.isNotEmpty) {
         developer.log('[GatewayTask] Received ${jobs.length} jobs from server');
