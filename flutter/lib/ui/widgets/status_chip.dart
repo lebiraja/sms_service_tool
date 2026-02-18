@@ -4,7 +4,7 @@ import '../viewmodels/main_viewmodel.dart';
 class StatusChip extends StatelessWidget {
   final ConnectionStateEnum state;
 
-  const StatusChip({required this.state, Key? key}) : super(key: key);
+  const StatusChip({required this.state, super.key});
 
   Color _getColor() {
     switch (state) {

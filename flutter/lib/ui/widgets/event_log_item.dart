@@ -4,7 +4,7 @@ import '../../data/models/event_log_entry.dart';
 class EventLogItem extends StatelessWidget {
   final EventLogEntry entry;
 
-  const EventLogItem({required this.entry, Key? key}) : super(key: key);
+  const EventLogItem({required this.entry, super.key});
 
   Color _getIconColor() {
     switch (entry.level) {

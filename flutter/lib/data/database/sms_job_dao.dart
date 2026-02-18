@@ -1,6 +1,5 @@
 import 'package:sqflite/sqflite.dart';
 import '../models/sms_job.dart';
-import '../models/sms_job_status.dart';
 import 'app_database.dart';
 
 class SmsJobDao {

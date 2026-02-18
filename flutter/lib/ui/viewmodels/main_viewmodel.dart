@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import '../../data/database/app_database.dart';
 import '../../data/models/event_log_entry.dart';
 import '../../data/prefs/prefs_manager.dart';
 import '../../data/repository/sms_job_repository.dart';

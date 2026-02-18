@@ -1,5 +1,4 @@
 import 'package:flutter/services.dart';
-import '../data/models/sms_job.dart';
 import '../data/models/sms_job_status.dart';
 
 typedef OnSmsResult = void Function(
@@ -36,7 +35,7 @@ class SmsSender {
         }
       },
       onError: (error) {
-        print('Delivery stream error: $error');
+        // Delivery stream error - typically network or platform channel issue
       },
     );
   }
@@ -55,7 +54,6 @@ class SmsSender {
         'maxRetries': maxRetries,
       });
     } catch (e) {
-      print('Error sending SMS: $e');
       onResult(jobId, SmsJobStatus.failedPermanent, null, e.toString());
     }
   }

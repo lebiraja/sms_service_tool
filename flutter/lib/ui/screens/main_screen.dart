@@ -6,7 +6,7 @@ import '../widgets/status_chip.dart';
 import '../widgets/event_log_list.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  const MainScreen({super.key});
 
   @override
   State<MainScreen> createState() => _MainScreenState();

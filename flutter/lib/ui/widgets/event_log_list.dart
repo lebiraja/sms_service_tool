@@ -5,7 +5,7 @@ import 'event_log_item.dart';
 class EventLogList extends StatelessWidget {
   final List<EventLogEntry> logs;
 
-  const EventLogList({required this.logs, Key? key}) : super(key: key);
+  const EventLogList({required this.logs, super.key});
 
   @override
   Widget build(BuildContext context) {

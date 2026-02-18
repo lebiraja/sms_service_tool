@@ -22,7 +22,7 @@ void main() async {
 
   // Create WebSocket manager
   final wsManager = WebSocketManager(
-    onStateChange: (_, __) {},
+    onStateChange: (state, error) {},
   );
 
   // Create ViewModel
@@ -32,7 +32,7 @@ void main() async {
     wsManager: wsManager,
   );
 
-  await Future.delayed(const Duration(milliseconds: 500));
+  await Future<void>.delayed(const Duration(milliseconds: 500)); // ignore: unused_result
 
   runApp(GatewayApp(viewModel: viewModel));
 }

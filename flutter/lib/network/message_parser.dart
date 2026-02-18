@@ -1,7 +1,5 @@
 import 'package:uuid/uuid.dart';
 import 'dart:convert';
-import '../data/models/sms_job.dart';
-import '../data/models/sms_job_status.dart';
 
 abstract class ServerMessage {
   const ServerMessage();
