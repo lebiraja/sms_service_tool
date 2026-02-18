@@ -53,7 +53,9 @@ class SmsJobRepository {
   }
 
   Future<void> logInfo(String message) => _logEvent(EventLogLevel.info, message);
+
   Future<void> logWarn(String message) => _logEvent(EventLogLevel.warn, message);
+
   Future<void> logError(String message) => _logEvent(EventLogLevel.error, message);
 
   Future<List<EventLogEntry>> getLatestLogs(int limit) {

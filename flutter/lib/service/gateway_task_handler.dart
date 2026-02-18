@@ -1,11 +1,10 @@
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'dart:async';
-import '../network/websocket_manager.dart';
+import 'dart:developer' as developer;
+import '../network/http_client.dart';
 import '../data/database/app_database.dart';
 import '../data/repository/sms_job_repository.dart';
 import '../data/prefs/prefs_manager.dart';
-import '../network/message_parser.dart';
-import '../data/models/sms_job.dart';
 import '../data/models/sms_job_status.dart';
 import 'sms_sender.dart';
 
@@ -15,18 +14,17 @@ void startGatewayTask() {
 }
 
 class GatewayTaskHandler extends TaskHandler {
-  late WebSocketManager _wsManager;
+  late GatewayHttpClient _httpClient;
   late SmsJobRepository _repository;
   late SmsSender _smsSender;
   late PrefsManager _prefs;
-  StreamSubscription? _wsSubscription;
-  Timer? _retryTimer;
-  Timer? _pingTimer;
+  Timer? _pollTimer;
   bool _initialized = false;
+  bool _isConnected = false;
 
   @override
   Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
-    print('[GatewayTask] Starting gateway task handler...');
+    developer.log('[GatewayTask] Starting gateway task handler...');
 
     try {
       // Initialize preferences
@@ -40,37 +38,42 @@ class GatewayTaskHandler extends TaskHandler {
       // Initialize repository
       _repository = SmsJobRepository(database);
 
-      // Initialize WebSocket manager
-      _wsManager = WebSocketManager(
-        onStateChange: _onWsStateChange,
-      );
-
       // Initialize SMS sender
       _smsSender = SmsSender(onResult: _onSmsResult);
 
       _initialized = true;
 
-      // Get stored URL and connect
+      // Get stored URL
       final url = _prefs.getGatewayUrl();
+      final deviceId = await _prefs.getDeviceId();
+
       if (url != null && url.isNotEmpty) {
-        print('[GatewayTask] Connecting to: $url');
-        await _wsManager.connect(url);
-        _setupWebSocketListener();
-        await Future.delayed(const Duration(milliseconds: 500));
-        _sendDeviceInfo();
+        developer.log('[GatewayTask] Using URL: $url, Device ID: $deviceId');
+
+        // Create HTTP client
+        _httpClient = GatewayHttpClient(
+          baseUrl: url,
+          deviceId: deviceId,
+        );
+
+        // Send device info
+        await _sendDeviceInfo();
+
+        // Start polling timer (poll every 5 seconds)
+        _pollTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
+          _pollForJobs();
+        });
+
+        // Do initial poll immediately
+        await _pollForJobs();
+
+        developer.log('[GatewayTask] Gateway task handler initialized successfully');
       } else {
-        print('[GatewayTask] No gateway URL configured');
+        developer.log('[GatewayTask] No gateway URL configured');
+        await _repository.logWarn('No gateway URL configured');
       }
-
-      // Start periodic ping to keep connection alive
-      _pingTimer = Timer.periodic(const Duration(seconds: 30), (timer) {
-        // Periodically check and log connection state
-        print('[GatewayTask] Connection state: ${_wsManager.state}');
-      });
-
-      print('[GatewayTask] Gateway task handler initialized successfully');
     } catch (e) {
-      print('[GatewayTask] Error during initialization: $e');
+      developer.log('[GatewayTask] Error during initialization: $e');
       try {
         await _repository.logError('Task initialization failed: $e');
       } catch (_) {
@@ -84,39 +87,26 @@ class GatewayTaskHandler extends TaskHandler {
     if (!_initialized) return;
 
     try {
-      // Check for jobs that need retrying
-      _repository.getPendingRetries().then((pendingRetries) {
-        for (final job in pendingRetries) {
-          print('[GatewayTask] Retrying job: ${job.jobId}');
-          _smsSender.sendSms(
-            jobId: job.jobId,
-            phoneNumber: job.toNumber,
-            messageBody: job.body,
-            maxRetries: job.maxRetries,
-          );
-        }
-      });
+      // The polling is handled by the timer in onStart
+      // This is just a periodic callback from flutter_foreground_task
     } catch (e) {
-      print('[GatewayTask] Error in onRepeatEvent: $e');
+      developer.log('[GatewayTask] Error in onRepeatEvent: $e');
     }
   }
 
   @override
   Future<void> onDestroy(DateTime timestamp) async {
-    print('[GatewayTask] Destroying gateway task handler');
-    _pingTimer?.cancel();
-    _wsSubscription?.cancel();
-    _retryTimer?.cancel();
-    _wsManager.disconnect();
+    developer.log('[GatewayTask] Destroying gateway task handler');
+    _pollTimer?.cancel();
     _smsSender.dispose();
+    _httpClient.dispose();
     try {
       await _prefs.setServiceRunning(false);
     } catch (e) {
-      print('[GatewayTask] Error setting service running flag: $e');
+      developer.log('[GatewayTask] Error setting service running flag: $e');
     }
   }
 
-  @override
   void onButtonPressed(String id) {
     // Handle button press if needed
   }
@@ -126,58 +116,63 @@ class GatewayTaskHandler extends TaskHandler {
     // Handle notification button press
   }
 
-  void _setupWebSocketListener() {
-    _wsSubscription?.cancel();
-    _wsSubscription = _wsManager.messageStream.listen(
-      (message) async {
-        try {
-          if (message is SmsJobMessage) {
-            print('[GatewayTask] Received SMS job: ${message.jobId}');
+  /// Poll the backend for pending jobs
+  Future<void> _pollForJobs() async {
+    if (!_initialized) return;
 
-            // Create job in database
-            final now = DateTime.now();
-            final job = SmsJob(
-              jobId: message.jobId,
-              toNumber: message.to,
-              body: message.body,
-              status: SmsJobStatus.queued,
-              attempts: 0,
-              maxRetries: message.maxRetries,
-              createdAt: now,
-              updatedAt: now,
-            );
-
-            await _repository.createJob(job);
-            await _repository.logInfo(
-              'SMS Job received: ${message.to} - ${message.body.substring(0, (message.body.length > 30 ? 30 : message.body.length))}...',
-            );
-
-            // Send immediately
-            await _smsSender.sendSms(
-              jobId: job.jobId,
-              phoneNumber: job.toNumber,
-              messageBody: job.body,
-              maxRetries: job.maxRetries,
-            );
-          } else if (message is PingMessage) {
-            print('[GatewayTask] Received ping, sending pong');
-            final pongMsg = MessageParser.buildPongMessage(message.messageId);
-            _wsManager.send(pongMsg);
-          } else if (message is ErrorMessage) {
-            print('[GatewayTask] Server error: ${message.code} - ${message.detail}');
-            await _repository.logError(
-              'Server error: ${message.code} - ${message.detail}',
-            );
+    try {
+      // First, check if backend is healthy
+      if (!_isConnected) {
+        final isHealthy = await _httpClient.healthCheck();
+        if (!isHealthy) {
+          developer.log('[GatewayTask] Backend health check failed');
+          if (_isConnected) {
+            _isConnected = false;
+            await _repository.logWarn('Lost connection to server');
           }
-        } catch (e) {
-          print('[GatewayTask] Error processing message: $e');
-          await _repository.logError('Message processing error: $e');
+          return;
         }
-      },
-      onError: (error) {
-        print('[GatewayTask] WebSocket stream error: $error');
-      },
-    );
+
+        // First successful connection
+        if (!_isConnected) {
+          _isConnected = true;
+          await _repository.logInfo('Connected to server');
+          developer.log('[GatewayTask] Connected to server');
+        }
+      }
+
+      // Poll for pending jobs
+      final jobs = await _httpClient.getPendingJobs();
+
+      if (jobs.isNotEmpty) {
+        developer.log('[GatewayTask] Received ${jobs.length} jobs from server');
+        await _repository.logInfo('Received ${jobs.length} SMS job(s)');
+
+        for (final job in jobs) {
+          developer.log('[GatewayTask] Processing job: ${job.jobId}');
+
+          // Create job in local database if not exists
+          final existingJob = await _repository.getJob(job.jobId);
+          if (existingJob == null) {
+            await _repository.createJob(job);
+          }
+
+          // Send the SMS
+          await _smsSender.sendSms(
+            jobId: job.jobId,
+            phoneNumber: job.toNumber,
+            messageBody: job.body,
+            maxRetries: job.maxRetries,
+          );
+        }
+      }
+    } catch (e) {
+      developer.log('[GatewayTask] Error polling jobs: $e');
+      if (_isConnected) {
+        _isConnected = false;
+        await _repository.logError('Connection error: $e');
+      }
+    }
   }
 
   Future<void> _onSmsResult(
@@ -189,11 +184,11 @@ class GatewayTaskHandler extends TaskHandler {
     try {
       final job = await _repository.getJob(jobId);
       if (job == null) {
-        print('[GatewayTask] Job not found: $jobId');
+        developer.log('[GatewayTask] Job not found: $jobId');
         return;
       }
 
-      print('[GatewayTask] SMS result: $jobId -> ${status.name}');
+      developer.log('[GatewayTask] SMS result: $jobId -> ${status.name}');
 
       final updatedJob = job.copyWith(
         status: status,
@@ -209,65 +204,35 @@ class GatewayTaskHandler extends TaskHandler {
         logMessage: 'SMS Status: ${status.name}${errorMessage != null ? ' - $errorMessage' : ''}',
       );
 
-      // Send status update to server
-      final statusUpdateMsg = MessageParser.buildStatusUpdateMessage(
-        jobId: jobId,
-        status: status.toJsonString(),
-        attempt: updatedJob.attempts,
-        errorCode: errorCode,
-        errorMessage: errorMessage,
-      );
-      _wsManager.send(statusUpdateMsg);
+      // Report status to server
+      if (_isConnected) {
+        await _httpClient.reportStatus(
+          jobId: jobId,
+          status: status.toJsonString(),
+          attempt: updatedJob.attempts,
+          errorCode: errorCode,
+          errorMessage: errorMessage,
+        );
+      }
     } catch (e) {
-      print('[GatewayTask] Error handling SMS result: $e');
-    }
-  }
-
-  void _onWsStateChange(ConnectionState state, String? error) {
-    print('[GatewayTask] WebSocket state changed: $state');
-
-    if (state == ConnectionState.connected) {
-      print('[GatewayTask] Connected! Flushing pending reports...');
-      _flushPendingReports();
-      _sendDeviceInfo();
-    } else if (state == ConnectionState.error) {
-      print('[GatewayTask] Connection error: $error');
+      developer.log('[GatewayTask] Error handling SMS result: $e');
     }
   }
 
   Future<void> _sendDeviceInfo() async {
     try {
-      final deviceId = await _prefs.getDeviceId();
-      final deviceInfoMsg = MessageParser.buildDeviceInfoMessage(
-        deviceId: deviceId,
-        deviceName: 'Flutter Device',
-        androidVersion: 29,
-      );
-      _wsManager.send(deviceInfoMsg);
-      print('[GatewayTask] Device info sent');
-    } catch (e) {
-      print('[GatewayTask] Error sending device info: $e');
-    }
-  }
-
-  Future<void> _flushPendingReports() async {
-    try {
-      final pending = await _repository.getPendingReports();
-      print('[GatewayTask] Flushing ${pending.length} pending reports');
-
-      for (final job in pending) {
-        final statusUpdateMsg = MessageParser.buildStatusUpdateMessage(
-          jobId: job.jobId,
-          status: job.status.toJsonString(),
-          attempt: job.attempts,
-          errorCode: job.errorCode,
-          errorMessage: job.errorMessage,
-        );
-        _wsManager.send(statusUpdateMsg);
-        await _repository.clearPendingReport(job.jobId);
+      developer.log('[GatewayTask] Sending device info...');
+      final success = await _httpClient.sendDeviceInfo();
+      if (success) {
+        developer.log('[GatewayTask] ✓ Device info sent successfully');
+        await _repository.logInfo('✓ Device registered with server');
+      } else {
+        developer.log('[GatewayTask] ✗ Failed to send device info');
+        await _repository.logWarn('Failed to register device');
       }
     } catch (e) {
-      print('[GatewayTask] Error flushing pending reports: $e');
+      developer.log('[GatewayTask] Error sending device info: $e');
+      await _repository.logError('Device registration error: $e');
     }
   }
 }

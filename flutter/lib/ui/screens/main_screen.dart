@@ -94,9 +94,10 @@ class _MainScreenState extends State<MainScreen> {
                   const SizedBox(height: 8),
                   TextField(
                     controller: _urlController,
-                    enabled: !viewModel.isConnected() && !viewModel.isConnecting(),
+                    enabled: viewModel.connectionState != ConnectionStateEnum.connected &&
+                            viewModel.connectionState != ConnectionStateEnum.connecting,
                     decoration: InputDecoration(
-                      hintText: 'e.g., 192.168.1.100:7777 or ws://example.com',
+                      hintText: 'e.g., 192.168.1.100:7777',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4),
                       ),

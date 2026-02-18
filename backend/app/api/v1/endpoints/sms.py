@@ -11,6 +11,7 @@ from app.models.sms_job import (
 )
 from app.services.job_queue import JobQueue
 from app.services.ws_manager import WebSocketManager
+from . import device as device_api
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/sms", tags=["sms"])
@@ -40,8 +41,10 @@ async def send_sms(
     Returns 503 if no device is currently connected.
     Returns 429 if job queue is at capacity.
     """
-    # Check if device is connected
-    if not ws_manager.is_connected():
+    # Check if device is connected (via HTTP polling)
+    connected_devices = device_api.get_connected_devices()
+    if not connected_devices:
+        logger.error("SMS submission rejected: No device connected. Available devices: 0")
         raise HTTPException(
             status_code=503,
             detail={
@@ -49,6 +52,7 @@ async def send_sms(
                 "detail": "No Android device is currently connected to the gateway",
             },
         )
+    logger.info(f"✓ Device(s) connected ({len(connected_devices)} device(s)): {connected_devices}")
 
     try:
         job = await queue.create_job(
@@ -67,20 +71,10 @@ async def send_sms(
             )
         raise
 
-    # Try to dispatch job to the connected device
-    try:
-        await ws_manager.send_job(job)
-        logger.info(f"SMS job {job.job_id} dispatched to device")
-    except Exception as e:
-        logger.error(f"Failed to dispatch job {job.job_id}: {e}")
-        # Job was created but not dispatched; client can retry
-        raise HTTPException(
-            status_code=503,
-            detail={
-                "error": "DISPATCH_FAILED",
-                "detail": "Failed to dispatch job to device",
-            },
-        )
+    # Job created successfully
+    # Note: With HTTP polling, the device will poll for jobs automatically
+    # No explicit dispatch needed
+    logger.info(f"✓ SMS job created: {job.job_id} | To: {request.to} | Body: {request.body[:50]}... | Status: QUEUED | Devices will pick up on next poll")
 
     return SmsJobResponse(
         job_id=job.job_id,

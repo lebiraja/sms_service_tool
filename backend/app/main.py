@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.services.job_queue import JobQueue
 from app.services.ws_manager import WebSocketManager
-from app.api.v1.endpoints import sms, status, ws
+from app.api.v1.endpoints import sms, status, ws, device
 from app.api.v1 import router as v1_router
 
 # Configure logging
@@ -66,6 +66,7 @@ def create_app() -> FastAPI:
     app.dependency_overrides[sms.get_ws_manager] = get_ws_manager
     app.dependency_overrides[status.get_ws_manager] = get_ws_manager
     app.dependency_overrides[ws.get_ws_manager] = get_ws_manager
+    app.dependency_overrides[device.get_queue] = get_job_queue
 
     # Root endpoint
     @app.get("/")
@@ -73,9 +74,14 @@ def create_app() -> FastAPI:
         return {
             "name": "SMSTool Gateway API",
             "version": "1.0.0",
-            "health": "/api/v1/health",
+            "health": "/health",
             "docs": "/docs",
         }
+
+    # Health check endpoint
+    @app.get("/health")
+    async def health():
+        return {"status": "ok", "service": "smstool-gateway"}
 
     return app
 
