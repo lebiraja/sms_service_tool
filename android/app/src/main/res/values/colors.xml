@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary colors -->
+    <color name="primary">#2196F3</color>
+    <color name="primary_dark">#1976D2</color>
+    <color name="accent">#4CAF50</color>
+
+    <!-- Status colors -->
+    <color name="status_connected">#4CAF50</color>
+    <color name="status_connecting">#FFC107</color>
+    <color name="status_disconnected">#9E9E9E</color>
+    <color name="status_error">#F44336</color>
+
+    <!-- Text colors -->
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+
+    <!-- Background colors -->
+    <color name="bg_light">#FAFAFA</color>
+    <color name="bg_card">#FFFFFF</color>
+
+    <!-- Log level colors -->
+    <color name="log_info">#2196F3</color>
+    <color name="log_warn">#FFC107</color>
+    <color name="log_error">#F44336</color>
+
+    <!-- Other -->
+    <color name="error">#F44336</color>
+    <color name="success">#4CAF50</color>
+</resources>

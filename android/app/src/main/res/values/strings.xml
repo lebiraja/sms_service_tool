@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SMS Gateway</string>
+
+    <!-- Connection Status -->
+    <string name="status_not_connected">Not connected</string>
+    <string name="status_connecting">Connecting...</string>
+    <string name="status_connected">Connected</string>
+    <string name="status_error">Connection failed</string>
+
+    <!-- Labels -->
+    <string name="label_server_url">Backend Server</string>
+    <string name="label_device_id">Device ID</string>
+    <string name="label_activity_log">Activity Log</string>
+
+    <!-- Hints -->
+    <string name="hint_server_url">e.g., 192.168.1.100:7777 or ws://example.com</string>
+
+    <!-- Actions -->
+    <string name="action_connect">Connect</string>
+    <string name="action_disconnect">Disconnect</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_copy_device_id">Copy Device ID</string>
+
+    <!-- Messages -->
+    <string name="error_invalid_url">Invalid URL format</string>
+    <string name="error_network_offline">Network is offline</string>
+    <string name="error_permission_denied">Permission denied</string>
+</resources>

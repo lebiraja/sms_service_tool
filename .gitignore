@@ -1,0 +1,64 @@
+# Backend
+backend/venv/
+backend/.venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.db
+backend/data/
+backend/.env
+backend/.pytest_cache/
+backend/.coverage
+backend/htmlcov/
+backend/dist/
+backend/build/
+backend/*.egg-info/
+
+# Android
+android/.gradle/
+android/local.properties
+android/**/.DS_Store
+android/build/
+android/**/*.apk
+android/**/*.aar
+android/**/*.jks
+android/**/*.keystore
+android/**/.cxx/
+android/.idea/
+android/out/
+android/captures/
+android/**/.externalNativeBuild
+android/**/.cxx
+android/**/lint-results-*.xml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+smstool.db
+*.log

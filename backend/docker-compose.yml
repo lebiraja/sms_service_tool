@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  smstool:
+    build: .
+    container_name: smstool-gateway
+    ports:
+      - "7777:7777"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - HOST=0.0.0.0
+      - PORT=7777
+      - JOB_QUEUE_MAX_SIZE=1000
+      - PING_INTERVAL_SECONDS=30
+      - PING_TIMEOUT_SECONDS=10
+      - DB_URL=sqlite:////app/data/smstool.db
+      - LOG_LEVEL=INFO
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7777/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
